@@ -15,7 +15,8 @@ function handleCreator() {
   const amount = parseInt(Math.abs(input.value));
 
   if (amount >= 1 && amount <= 100) {
-    createBoxes(amount);
+    const boxesHTML = createBoxes(amount);
+    boxes.innerHTML = boxesHTML;
     input.value = '';
   } else {
     alert('Введіть число від 1 до 100');
@@ -23,15 +24,14 @@ function handleCreator() {
 }
 
 function createBoxes(amount) {
-  clearBoxes();
-  for (let i = 0; i < amount; i += 1) {
-    const box = document.createElement('div');
-    box.classList.add('box');
-    box.style.backgroundColor = getRandomHexColor();
-    box.style.width = `${30 + i * 10}px`;
-    box.style.height = `${30 + i * 10}px`;
-    boxes.appendChild(box);
+  const boxesArray = [];
+  for (let i = 0; i < amount; i++) {
+    const boxStyle = `background-color: ${getRandomHexColor()}; width: ${
+      30 + i * 10
+    }px; height: ${30 + i * 10}px;`;
+    boxesArray.push(`<div class="box" style="${boxStyle}"></div>`);
   }
+  return boxesArray.join('');
 }
 
 function getRandomHexColor() {
@@ -40,10 +40,6 @@ function getRandomHexColor() {
     .padStart(6, 0)}`;
 }
 
-function clearBoxes() {
-  boxes.innerHTML = '';
-}
-
 function handleDestroyer() {
-  clearBoxes();
+  boxes.innerHTML = '';
 }
